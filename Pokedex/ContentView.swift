@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct ContentView: View {
-    var pokemodel = PokemonModel()
+    var pokemodel = PokemonViewModel()
     @State private var pokemon = [Pokemon] ()
     var body: some View {
         NavigationView {
@@ -39,7 +39,7 @@ struct ContentView: View {
                         .frame(width: 100, height: 100)
                 }
             }
-            .navigationTitle("Pokemon")
+            .navigationTitle("Pokedex")
         }
         
         .onAppear {

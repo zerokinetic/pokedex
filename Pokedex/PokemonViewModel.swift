@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Pokemon : Identifiable, Decodable {
     let pokeID = UUID()
+    var isFavourite = false
     
     let id: Int
     let name: String
@@ -16,12 +17,21 @@ struct Pokemon : Identifiable, Decodable {
     let type: String
     let description: String
     
+    let attack: Int
+    let defense: Int
+    let height: Int
+    let weight: Int
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case imageURL = "imageUrl"
         case type
         case description
+        case attack
+        case defense
+        case height
+        case weight
     }
     
     var typeColor: Color {
@@ -57,7 +67,14 @@ enum FetchError: Error {
     case badData
 }
 
-class PokemonModel {
+class PokemonViewModel: ObservableObject {
+    @Published var pokemon = [Pokemon]()
+    
+    init() {
+        async {
+            pokemon = try await getPokemon()
+        }
+    }
     func getPokemon() async throws -> [Pokemon] {
         guard let url = URL(string: "https://pokedex-bb36f.firebaseio.com/pokemon.json")
         else {
@@ -79,6 +96,9 @@ class PokemonModel {
         
         
     }
+    
+    
+    let MOCK_POKEMON = Pokemon(id: 0, name: "Bulbasaur", imageURL: "https://firebasestorage.googleapis.co...", type: "poison", description: "This is a test example of what the text in the description would look like for the given pokemon. This is a test example of what the text in the description would look like for the given pokemon.", attack: 49, defense: 52, height: 10, weight: 98)
 }
 
 extension Data {
